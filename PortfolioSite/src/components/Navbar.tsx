@@ -1,11 +1,8 @@
 import React, { useState, cloneElement } from "react";
-import { FaDiceD20 } from "react-icons/fa";
 import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
 import { FaFaceSmile } from "react-icons/fa6";
 import RandomFace from "./RandomFace";
 import Sidebar from "./Sidebar";
-import { IconType } from "react-icons";
-import { set } from "firebase/database";
 
 interface NavbarProps {
 	title?: string;
