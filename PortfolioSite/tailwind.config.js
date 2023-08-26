@@ -17,7 +17,7 @@ export default {
 				dimBlue: "#637282",
 				dullBlue: "#486187",
 				lightBlue: "#9db4ce",
-				background: "#455063",
+				background: "#1d2227",
 				foreground: "#6d9ccf",
 			},
 			fontFamily: {

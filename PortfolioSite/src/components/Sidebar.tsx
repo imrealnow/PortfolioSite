@@ -32,9 +32,9 @@ const Sidebar = (props: SidebarProps) => {
 					className="relative content-box w-fit cursor-pointer pointer-events-auto select-none"
 				>
 					<span
-						className={`flex items-center gap-4 justify-start focus:bg-transparent w-full h-[50px] pl-[15px] transition-all hover:pl-5 hover:text-stone-200 duration-100 ease-in-out ${
+						className={`flex items-center gap-4 justify-start focus:bg-transparent w-full h-[50px] pl-[15px] transition-all hover:pl-5 hover:text-stone-300 duration-100 ease-in-out ${
 							isLinkCurrent(link)
-								? "text-stone-100"
+								? "text-stone-300 border-l-4 border-highlightBlue"
 								: "text-stone-500"
 						}`}
 						onClick={() => {
@@ -66,8 +66,8 @@ const Sidebar = (props: SidebarProps) => {
 							</Tooltip>
 						)}
 						<span
-							className={`text-gray-400 text-[15px] font-poppins w-0 hidden pointer-events-none transition-all whitespace-nowrap duration-200 ease-linear ${
-								active ? "sm:block" : "xs:pointer-events-auto"
+							className={`text-gray-400 text-[15px] font-poppins w-0 hidden pointer-events-none xs:pointer-events-auto transition-all whitespace-nowrap duration-200 ease-linear ${
+								active ? "sm:block" : ""
 							}`}
 						>
 							{link.title}

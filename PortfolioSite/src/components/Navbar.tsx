@@ -16,10 +16,10 @@ const Navbar = ({ title }: NavbarProps) => {
 		setActive(!prev);
 		setTimeout(() => {
 			setFace(RandomFace({}));
-		}, 100);
+		}, 50);
 		setTimeout(() => {
 			setFace(<FaFaceSmile />);
-		}, 1000);
+		}, 700);
 	};
 
 	return (
@@ -43,11 +43,13 @@ const Navbar = ({ title }: NavbarProps) => {
 								}`,
 							})}
 							<span
-								className={`self-center font-poppins px-2 xs:px-2 whitespace-clip text-gray-200 `}
+								className={`self-center font-poppins px-2 xs:px-2 whitespace-clip `}
 							>
-								<span>Liam Green</span>
+								<span className="text-stone-300">
+									Liam Green
+								</span>
 								<span
-									className={`hidden text-xs text-dimWhite ${
+									className={`hidden text-xs text-stone-500 ${
 										active ? "" : "sm:inline-block"
 									}`}
 								>
@@ -56,17 +58,17 @@ const Navbar = ({ title }: NavbarProps) => {
 							</span>
 						</a>
 						{title && (
-							<span className="absolute hidden sm:block -ml-10 xs:-ml-[50px] left-1/2 transform -translate-x-1/2 text-sm xs:text-2xl font-bold text-gray-200">
+							<span className="absolute hidden sm:block -ml-10 xs:-ml-[50px] left-1/2 transform -translate-x-1/2 text-sm xs:text-2xl font-bold text-stone-300">
 								{title}
 							</span>
 						)}
 						<div className="mr-[55px] mt-auto flex items-center justify-between">
 							<div className="h-full self-center align-middle flex gap-5 justify-between flex-row items-center">
 								<a href="https://www.linkedin.com/in/liam-green-07b34515b/">
-									<AiFillLinkedin className="text-xl sm:text-4xl text-gray-200 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
+									<AiFillLinkedin className="text-xl sm:text-4xl text-stone-400 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
 								</a>
 								<a href="https://www.github.com/imrealnow">
-									<AiFillGithub className="text-xl sm:text-4xl text-gray-200 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
+									<AiFillGithub className="text-xl sm:text-4xl text-stone-400 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
 								</a>
 							</div>
 						</div>
