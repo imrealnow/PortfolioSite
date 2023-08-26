@@ -1,7 +1,7 @@
 import { Tooltip } from "flowbite-react";
 import React from "react";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
 	navLinksBottom,
 	navLinksTop,
@@ -14,6 +14,11 @@ interface SidebarProps {
 }
 const Sidebar = (props: SidebarProps) => {
 	let active = props.active;
+	const location = useLocation();
+	const isLinkCurrent: (link: NavLink) => boolean = (link) => {
+		return location.pathname === "/" + link.id ? true : false;
+	};
+
 	const onClick = props.onClick;
 	const navigate = useNavigate();
 	const showTooltips = window.screen.width < 480 || active ? true : false;
@@ -27,7 +32,11 @@ const Sidebar = (props: SidebarProps) => {
 					className="relative content-box w-fit cursor-pointer pointer-events-auto select-none"
 				>
 					<span
-						className="flex items-center gap-4 justify-start focus:bg-transparent w-full h-[50px] pl-[15px] text-secondary transition-all hover:pl-5 hover:text-white duration-100 ease-in-out"
+						className={`flex items-center gap-4 justify-start focus:bg-transparent w-full h-[50px] pl-[15px] transition-all hover:pl-5 hover:text-stone-200 duration-100 ease-in-out ${
+							isLinkCurrent(link)
+								? "text-stone-100"
+								: "text-stone-500"
+						}`}
 						onClick={() => {
 							link.actionOverride
 								? link.actionOverride()
