@@ -7,11 +7,12 @@ const gameProjects: ProjectHierarchy = [
             {
                 type: FileType.MARKDOWN,
                 name: 'README',
-                content: '',
+                content: './FileContent/ZombiesArePeopleToo/readme.md',
             },
             {
                 type: FileType.EXECUTABLE,
-                name: 'ZombiesArePeopleToo',
+                name: 'Play',
+                content: '',
             },
         ],
     },
@@ -25,7 +26,8 @@ const gameProjects: ProjectHierarchy = [
             },
             {
                 type: FileType.EXECUTABLE,
-                name: 'EchoesOfInnocence',
+                name: 'Play',
+                content: '',
             },
         ],
     },
@@ -37,10 +39,6 @@ const gameProjects: ProjectHierarchy = [
                 name: 'README',
                 content: '',
             },
-            {
-                type: FileType.EXECUTABLE,
-                name: 'SomethingFishy',
-            },
         ],
     },
     {
@@ -50,10 +48,6 @@ const gameProjects: ProjectHierarchy = [
                 type: FileType.MARKDOWN,
                 name: 'README',
                 content: '',
-            },
-            {
-                type: FileType.EXECUTABLE,
-                name: 'BallTapper',
             },
         ],
     },

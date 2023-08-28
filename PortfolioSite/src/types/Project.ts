@@ -9,7 +9,7 @@ enum FileType {
 interface FileItem {
     type: FileType;
     name: string;
-    content?: string;
+    content: string;
 }
 
 // Represents a project folder which contains multiple files.

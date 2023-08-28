@@ -2,7 +2,7 @@ import { FileType, ProjectHierarchy} from "../types/Project";
 
 const libraryProjects: ProjectHierarchy = [
     {
-        name: 'SharedVariables',
+        name: 'Shared Variables',
         files: [
             {
                 type: FileType.MARKDOWN,
@@ -12,7 +12,7 @@ const libraryProjects: ProjectHierarchy = [
         ],
     },
     {
-        name: 'ProcessingGameFramework',
+        name: 'Processing Game Framework',
         files: [
             {
                 type: FileType.MARKDOWN,

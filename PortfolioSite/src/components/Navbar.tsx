@@ -1,43 +1,45 @@
-import React, { useState, cloneElement } from "react";
+import React, { cloneElement } from "react";
 import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
-import { FaFaceSmile } from "react-icons/fa6";
-import RandomFace from "./RandomFace";
-import Sidebar from "./Sidebar";
+import type * as CSS from "csstype";
 
 interface NavbarProps {
 	title?: string;
+	active: boolean;
+	projectHierarchyWidth: number;
+	icon: React.ReactNode;
 }
 
-const Navbar = ({ title }: NavbarProps) => {
-	const [active, setActive] = useState(false);
-	const [face, setFace] = useState<React.ReactNode>(<FaFaceSmile />);
-
-	const toggleActive: (active: boolean) => void = (prev) => {
-		setActive(!prev);
-		setTimeout(() => {
-			setFace(RandomFace({}));
-		}, 50);
-		setTimeout(() => {
-			setFace(<FaFaceSmile />);
-		}, 700);
+const Navbar = ({
+	title,
+	active,
+	icon,
+	projectHierarchyWidth,
+}: NavbarProps) => {
+	const widthStyle: () => CSS.Properties = () => {
+		return {
+			width: active ? `${projectHierarchyWidth}px` : "0px",
+		};
 	};
-
 	return (
 		<div>
 			<nav
 				className={`fixed top-0 ${
 					active ? "pl-0" : "pl-1 xs:pl-4"
-				}  left-[50px] z-50 h-[50px] w-full transition-all duration-600 ease-in-out bg-shadowGray`}
+				}  left-[50px] z-50 h-[50px] transition-all duration-600 ease-in-out bg-shadowGray`}
+				style={{
+					width: "calc(100vw - 50px)",
+				}}
 			>
 				<div className={`transition-all duration-300 ease-in-out`}>
 					<div className="flex mt-[7px] flex-1 justify-between">
+						{/* Black sliding bar on menu open */}
 						<div
-							className={`fixed top-0 left-[50px] bg-shadowBlack transition-width duration-300 ease-in-out h-[50px] z-40 ${
-								active ? "w-36 xs:w-[200px]" : "w-0"
-							}`}
-						></div>
+							className={`fixed top-0 left-[50px] bg-[#293b55] transition-width duration-300 ease-in-out h-[50px] z-40`}
+							style={widthStyle()}
+						/>
 						<a href="/" className={`flex z-50`}>
-							{cloneElement(face as React.ReactElement, {
+							{/* Icon */}
+							{cloneElement(icon as React.ReactElement, {
 								className: `self-center h-full text-[20px] xs:text-[30px] transition-transform duration-200 ease-in-out text-blue-500 ${
 									active ? "rotate-360" : "rotate-[-360]"
 								}`,
@@ -57,26 +59,26 @@ const Navbar = ({ title }: NavbarProps) => {
 								</span>
 							</span>
 						</a>
+						{/* Page title */}
 						{title && (
 							<span className="absolute hidden sm:block -ml-10 xs:-ml-[50px] left-1/2 transform -translate-x-1/2 text-sm xs:text-2xl font-bold text-stone-300">
 								{title}
 							</span>
 						)}
-						<div className="mr-[55px] mt-auto flex items-center justify-between">
-							<div className="h-full self-center align-middle flex gap-5 justify-between flex-row items-center">
+						{/* Social Media Links */}
+						<div className=" mt-auto flex items-center justify-between">
+							<div className="absolute right-10 top-1/2 h-[50px] w-fit -translate-y-1/2 self-center align-middle flex gap-5 justify-between flex-row items-center">
 								<a href="https://www.linkedin.com/in/liam-green-07b34515b/">
-									<AiFillLinkedin className="text-xl sm:text-4xl text-stone-400 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
+									<AiFillLinkedin className="text-2xl sm:text-4xl text-stone-400 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
 								</a>
 								<a href="https://www.github.com/imrealnow">
-									<AiFillGithub className="text-xl sm:text-4xl text-stone-400 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
+									<AiFillGithub className="text-2xl sm:text-4xl text-stone-400 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
 								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</nav>
-
-			<Sidebar active={active} onClick={toggleActive} />
 		</div>
 	);
 };
