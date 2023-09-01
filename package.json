@@ -1,1 +1,5 @@
-{}
+{
+  "dependencies": {
+    "react-unity-webgl": "^9.4.3"
+  }
+}

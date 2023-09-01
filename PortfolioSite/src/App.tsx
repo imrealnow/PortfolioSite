@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import { Base } from "./views";
+import { Base, Home } from "./views";
 import { Navigate } from "react-router-dom";
+import allProjects from "./constants/allProjects";
 import gameProjects from "./constants/gameProjects";
 import libraryProjects from "./constants/libraryProjects";
 import webAppProjects from "./constants/webAppProjects";
@@ -13,7 +14,11 @@ const App = () => {
 				<Route
 					path="/home"
 					element={
-						<Base title="Home" projectHierarchy={gameProjects} />
+						<Base
+							title="Home"
+							projectHierarchy={allProjects}
+							children={<Home />}
+						/>
 					}
 				/>
 				<Route

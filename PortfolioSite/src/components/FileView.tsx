@@ -6,9 +6,17 @@ import Readme from "./Readme";
 export const FileView: React.FC = () => {
 	const currentOpenFile = useRecoilValue(openFileItem);
 	const renderContent = (file: FileItem) => {
-		switch (file.type) {
+		switch (file.contentType) {
 			case FileType.MARKDOWN:
-				return <Readme path={file.content} />;
+				const typedMD = file as FileItem<string>;
+				return <Readme path={typedMD.content} />;
+			case FileType.EXECUTABLE:
+				const typedEmbed = file as FileItem<React.ReactNode>;
+				return (
+					<div className="relative left-1/2 -translate-x-1/2">
+						{typedEmbed.content}
+					</div>
+				);
 			default:
 				return <div className="pl-4">Unsupported file type</div>;
 		}
@@ -19,9 +27,9 @@ export const FileView: React.FC = () => {
 	}
 
 	return (
-		<div>
+		<>
 			{/* Render the contents or details of the currently opened file */}
 			{renderContent(currentOpenFile)}
-		</div>
+		</>
 	);
 };

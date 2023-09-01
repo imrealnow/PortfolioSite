@@ -1,33 +1,32 @@
 import React, { cloneElement } from "react";
+import { useRecoilValue } from "recoil";
 import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
 import type * as CSS from "csstype";
+import { FileItem } from "../types/Project";
+import { openFileItem } from "../atoms/openFileItem";
 
 interface NavbarProps {
-	title?: string;
 	active: boolean;
 	projectHierarchyWidth: number;
 	icon: React.ReactNode;
 }
 
-const Navbar = ({
-	title,
-	active,
-	icon,
-	projectHierarchyWidth,
-}: NavbarProps) => {
+const Navbar = ({ active, icon, projectHierarchyWidth }: NavbarProps) => {
 	const widthStyle: () => CSS.Properties = () => {
 		return {
 			width: active ? `${projectHierarchyWidth}px` : "0px",
 		};
 	};
+	const currentFile: FileItem<any> | null =
+		useRecoilValue<FileItem<any> | null>(openFileItem);
 	return (
 		<div>
 			<nav
 				className={`fixed top-0 ${
-					active ? "pl-0" : "pl-1 xs:pl-4"
-				}  left-[50px] z-50 h-[50px] transition-all duration-600 ease-in-out bg-shadowGray`}
+					active ? "pl-1" : "pl-2 xs:pl-4"
+				}  ml-[50px] left-0 z-50 h-[50px] transition-all duration-600 ease-in-out bg-shadowGray`}
 				style={{
-					width: "calc(100vw - 50px)",
+					width: "100vw",
 				}}
 			>
 				<div className={`transition-all duration-300 ease-in-out`}>
@@ -60,14 +59,14 @@ const Navbar = ({
 							</span>
 						</a>
 						{/* Page title */}
-						{title && (
+						{currentFile && (
 							<span className="absolute hidden sm:block -ml-10 xs:-ml-[50px] left-1/2 transform -translate-x-1/2 text-sm xs:text-2xl font-bold text-stone-300">
-								{title}
+								{currentFile.name + currentFile.contentType}
 							</span>
 						)}
 						{/* Social Media Links */}
 						<div className=" mt-auto flex items-center justify-between">
-							<div className="absolute right-10 top-1/2 h-[50px] w-fit -translate-y-1/2 self-center align-middle flex gap-5 justify-between flex-row items-center">
+							<div className="absolute right-20 top-1/2 h-[50px] w-fit -translate-y-1/2 self-center align-middle flex gap-5 justify-between flex-row items-center">
 								<a href="https://www.linkedin.com/in/liam-green-07b34515b/">
 									<AiFillLinkedin className="text-2xl sm:text-4xl text-stone-400 hover:text-blue-500 transition-colors duration-200 ease-in-out" />
 								</a>

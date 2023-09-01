@@ -16,7 +16,7 @@ interface BaseProps {
 
 interface Style extends CSS.Properties, CSS.PropertiesHyphen {}
 
-const Base = ({ title, children, projectHierarchy }: BaseProps) => {
+const Base = ({ children, projectHierarchy }: BaseProps) => {
 	const [active, setActive] = useState(true);
 	const [face, setFace] = useState<React.ReactNode>(<FaFaceSmile />);
 
@@ -36,12 +36,23 @@ const Base = ({ title, children, projectHierarchy }: BaseProps) => {
 
 	const translationStyle: () => Style = () => {
 		return {
-			transform: `translateX(${active ? 0 : -projectHierarchyWidth()}px)`,
+			transition: `left 0.3s ease-in-out`,
+			width: `calc(100vw + ${projectHierarchyWidth()}px)})`,
+			left: active ? "0px" : `-${projectHierarchyWidth()}px`,
+		};
+	};
+
+	const contentStyle: () => Style = () => {
+		return {
+			"max-height": "calc(100vh-50px)",
+			"overflow-y": "auto",
+			"max-width": "100vw",
+			"overlow-x": "hidden",
 		};
 	};
 
 	return (
-		<div className="bg-background w-full h-full overflow-hidden">
+		<div className="bg-background max-w-[100vw] max-h-[100vh] overflow-hidden">
 			<div className={`absolute top-0 w-[50px] h-[100vh]`}>
 				<Sidebar
 					active={active}
@@ -49,23 +60,23 @@ const Base = ({ title, children, projectHierarchy }: BaseProps) => {
 					projectHierarchy={projectHierarchy}
 				/>
 			</div>
-			<div className="absolute top-0 left-0 w-full h-full">
-				<Navbar
-					title={title}
-					active={active}
-					icon={face}
-					projectHierarchyWidth={projectHierarchyWidth()}
-				/>
-			</div>
+			<Navbar
+				active={active}
+				icon={face}
+				projectHierarchyWidth={projectHierarchyWidth()}
+			/>
 			<div
-				className={`absolute top-[50px] left-[50px] flex flex-row items-start justify-start w-full h-full transition-transform duration-300 ease-in-out `}
+				className={`absolute top-0 left-0 pt-[50px] h-full flex flex-row items-start justify-start transition-transform duration-300 ease-in-out overflow-x-clip`}
 				style={translationStyle()}
 			>
 				<ProjectHierarchyComponent
 					hierarchy={projectHierarchy}
 					width={projectHierarchyWidth()}
 				/>
-				<div className={`h-full w-full flex flex-col items-start`}>
+				<div
+					className={`flex flex-col items-start`}
+					style={contentStyle()}
+				>
 					{children ? children : <FileView />}
 				</div>
 			</div>

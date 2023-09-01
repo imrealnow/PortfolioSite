@@ -7,7 +7,6 @@ import {
 	navLinksTop,
 	NavLink,
 } from "../constants/navigationLinks";
-import ProjectHierarchyComponent from "./ProjectHierarchy";
 import { ProjectHierarchy } from "../types/Project";
 
 interface SidebarProps {
@@ -41,6 +40,7 @@ const Sidebar = (props: SidebarProps) => {
 								: "text-stone-500 border-l-0"
 						}`}
 						onClick={() => {
+							if (!active) onClick(active);
 							link.actionOverride
 								? link.actionOverride()
 								: navigate("/" + link.id);

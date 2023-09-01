@@ -1,10 +1,12 @@
 import { FileType, ProjectHierarchy } from "../types/Project";
-const webAppProjects: ProjectHierarchy = [
+const webAppProjects: ProjectHierarchy = {
+    showReturnButton: true,
+    projectFolders: [
     {
         name: 'Portfolio Site',
         files: [
             {
-                type: FileType.MARKDOWN,
+                contentType: FileType.MARKDOWN,
                 name: 'README',
                 content: '',
             },
@@ -14,12 +16,13 @@ const webAppProjects: ProjectHierarchy = [
         name: 'FableFusion',
         files: [
             {
-                type: FileType.MARKDOWN,
+                contentType: FileType.MARKDOWN,
                 name: 'README',
                 content: '',
             },
         ],
     },
-];
+]
+};
 
 export default webAppProjects ;

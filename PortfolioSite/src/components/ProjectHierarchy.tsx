@@ -4,11 +4,12 @@ import { FileItem, ProjectFolder, ProjectHierarchy } from "../types/Project";
 import { FaAngleRight } from "react-icons/fa";
 import IconForFileType from "./IconForFileType";
 import { openFileItem } from "../atoms/openFileItem";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
+import { useNavigate } from "react-router-dom";
 import type * as CSS from "csstype";
 
 const FileItemComponent: React.FC<{ file: FileItem }> = ({ file }) => {
-	const [openFile, setOpenFile] = useRecoilState(openFileItem);
+	const setOpenFile = useSetRecoilState(openFileItem);
 
 	const handleFileClick = () => {
 		setOpenFile(file);
@@ -19,8 +20,8 @@ const FileItemComponent: React.FC<{ file: FileItem }> = ({ file }) => {
 			onClick={handleFileClick}
 			className="inline-flex items-center w-full text-md gap-2 pl-2 cursor-pointer text-stone-400 hover:text-stone-300 hover:bg-stone-400 hover:bg-opacity-50"
 		>
-			<IconForFileType type={file.type} /> {file.name}
-			{file.type.toString()}
+			<IconForFileType type={file.contentType} /> {file.name}
+			{file.contentType.toString()}
 		</div>
 	);
 };
@@ -28,26 +29,33 @@ const FileItemComponent: React.FC<{ file: FileItem }> = ({ file }) => {
 const ProjectFolderComponent: React.FC<{ folder: ProjectFolder }> = ({
 	folder,
 }) => {
+	const navigate = useNavigate();
 	return (
-		<Disclosure>
-			{({ open }) => (
-				<>
-					<Disclosure.Button className="flex justify-start items-center w-full pl-4 text-lg hover:bg-stone-400 hover:bg-opacity-50 text-stone-300 font-normal font-mono text-left">
-						<FaAngleRight
-							className={`${
-								open ? "transform rotate-90" : ""
-							} w-5 h-5`}
-						/>
-						{folder.name}
-					</Disclosure.Button>
-					<Disclosure.Panel className="flex flex-col box-content mb-4 ml-8 hover:border-l-2 border-stone-400">
-						{folder.files.map((file, idx) => (
-							<FileItemComponent key={idx} file={file} />
-						))}
-					</Disclosure.Panel>
-				</>
-			)}
-		</Disclosure>
+		<span
+			onClick={
+				folder.onClickNavigate
+					? () => navigate("" + folder.onClickNavigate)
+					: () => {}
+			}
+		>
+			<Disclosure>
+				{({ open }) => (
+					<>
+						<Disclosure.Button className="flex justify-start items-center w-full pl-8 text-lg hover:bg-stone-400 hover:bg-opacity-50 text-stone-300 font-normal font-mono text-left">
+							<FaAngleRight
+								className={`${open ? "rotate-90" : ""} w-5 h-5`}
+							/>
+							{folder.name}
+						</Disclosure.Button>
+						<Disclosure.Panel className="flex flex-col box-content mb-1 ml-8 hover:border-l-2 border-stone-400">
+							{folder.files.map((file, idx) => (
+								<FileItemComponent key={idx} file={file} />
+							))}
+						</Disclosure.Panel>
+					</>
+				)}
+			</Disclosure>
+		</span>
 	);
 };
 
@@ -57,16 +65,28 @@ const ProjectHierarchyComponent: React.FC<{
 }> = ({ hierarchy, width }) => {
 	const widthStyle: () => CSS.PropertiesHyphen = () => {
 		return {
-			width: Math.floor(width) + "px",
-			"min-width": Math.floor(width) + "px",
+			width: Math.floor(width + 10) + "px",
+			height: "100%",
 		};
 	};
+	const navigate = useNavigate();
 	return (
 		<div
-			className={`flex flex-col items-start min-h-full px-4 bg-gray-800 rounded-none`}
+			className={`relative flex flex-col items-start min-h-full ml-10 h-full bg-gray-800 rounded-none overflow-y-none`}
 			style={widthStyle()}
 		>
-			{hierarchy.map((folder, idx) => (
+			{hierarchy.showReturnButton && (
+				<>
+					<button
+						className="flex flex-row items-center w-full bg-[#384d4f] text-stone-300 font-mono font-normal text-lg text-left pl-4 hover:bg-stone-400 hover:bg-opacity-50"
+						onClick={() => navigate("/")}
+					>
+						<FaAngleRight className="w-5 h-5" /> Home{" "}
+					</button>
+					<hr className="w-full border-[#496183]" />
+				</>
+			)}
+			{hierarchy.projectFolders.map((folder, idx) => (
 				<ProjectFolderComponent key={idx} folder={folder} />
 			))}
 		</div>

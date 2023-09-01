@@ -1,26 +1,29 @@
 import { FileType, ProjectHierarchy} from "../types/Project";
 
-const libraryProjects: ProjectHierarchy = [
-    {
-        name: 'Shared Variables',
-        files: [
-            {
-                type: FileType.MARKDOWN,
-                name: 'README',
-                content: '',
-            },
-        ],
-    },
-    {
-        name: 'Processing Game Framework',
-        files: [
-            {
-                type: FileType.MARKDOWN,
-                name: 'README',
-                content: '',
-            },
-        ],
-    },
-];
+const libraryProjects: ProjectHierarchy = {
+    showReturnButton: true,
+    projectFolders:[
+        {
+            name: 'Shared Variables',
+            files: [
+                {
+                    contentType: FileType.MARKDOWN,
+                    name: 'README',
+                    content: '',
+                },
+            ],
+        },
+        {
+            name: 'Processing Game Framework',
+            files: [
+                {
+                    contentType: FileType.MARKDOWN,
+                    name: 'README',
+                    content: '',
+                },
+            ],
+        },
+    ]
+};
 
 export default libraryProjects ;
