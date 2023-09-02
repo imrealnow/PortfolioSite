@@ -6,7 +6,6 @@ import ProjectHierarchyComponent from "../components/ProjectHierarchy";
 import { FileView } from "../components/FileView";
 import { FaFaceSmile } from "react-icons/fa6";
 import RandomFace from "../components/RandomFace";
-import { useWindowDimensions } from "../utils/windowDimensions";
 import type * as CSS from "csstype";
 
 interface BaseProps {
@@ -47,10 +46,12 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 		return {
 			maxHeight: "calc(100vh-50px)",
 			overflowY: "auto",
-			width: `calc(100vw - ${projectHierarchyWidth() + 50}px)`,
+			width: `${
+				active
+					? "calc(100vw -" + (projectHierarchyWidth() + 50) + "px)"
+					: "calc(100vw - 100px)"
+			}`,
 			transition: `margin 0.3s ease-in-out`,
-			// position: "relative",
-			marginLeft: `${active ? "0px" : "15%"}`,
 			maxWidth: "100vw",
 			overlowX: "hidden",
 		};
@@ -79,7 +80,9 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 					width={projectHierarchyWidth()}
 				/>
 				<div
-					className={`flex flex-col items-start`}
+					className={`flex flex-col items-start ml-0 ${
+						active ? "" : "md:ml-40"
+					}`}
 					style={contentStyle()}
 				>
 					{children ? children : <FileView />}

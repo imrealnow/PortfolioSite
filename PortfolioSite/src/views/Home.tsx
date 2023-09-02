@@ -1,8 +1,8 @@
 const Home = () => {
 	return (
 		<>
-			<main className="h-full w-full">
-				<div className="container mx-auto flex flex-col pl-10 md:pl-20 min-w-max md:max-h-[75vh] md:max-w-[75vw] justify-center py-2">
+			<main className="">
+				<div className="container mx-auto flex flex-col pl-10 md:pl-20 min-w-md md:max-h-[75vh] md:max-w-[100vw] justify-center py-2">
 					{/* Header */}
 					<section className="flex flex-col justify-start max-w-sm md:max-w-lg">
 						<h1 className="text-4xl font-bold text-slate-300">
@@ -15,7 +15,7 @@ const Home = () => {
 					{/* Content box */}
 					<section className="flex flex-col md:flex-row pt-4 gap-4 items-start justify-between">
 						{/* Left box */}
-						<section className="flex flex-col items-start justify-start max-w-sm md:max-w-md">
+						<section className="flex flex-col items-start justify-start max-w-xs md:max-w-md">
 							<h2 className="text-2xl font-bold">About Me</h2>
 							<p className="text-sm">
 								I am a software developer who is passionate
