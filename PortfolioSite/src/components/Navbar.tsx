@@ -30,13 +30,16 @@ const Navbar = ({ active, icon, projectHierarchyWidth }: NavbarProps) => {
 				}}
 			>
 				<div className={`transition-all duration-300 ease-in-out`}>
-					<div className="flex mt-[7px] flex-1 justify-between">
+					<div className="flex flex-1 justify-between">
 						{/* Black sliding bar on menu open */}
 						<div
 							className={`fixed top-0 left-[50px] bg-[#293b55] transition-width duration-300 ease-in-out h-[50px] z-40`}
 							style={widthStyle()}
 						/>
-						<a href="/" className={`flex z-50`}>
+						<a
+							href="/"
+							className={`relative flex z-50 h-[50px] -top-1/2 -translate-y-0`}
+						>
 							{/* Icon */}
 							{cloneElement(icon as React.ReactElement, {
 								className: `self-center h-full text-[20px] xs:text-[30px] transition-transform duration-200 ease-in-out text-blue-500 ${
