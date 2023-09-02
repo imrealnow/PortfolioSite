@@ -17,7 +17,7 @@ interface BaseProps {
 interface Style extends CSS.Properties, CSS.PropertiesHyphen {}
 
 const Base = ({ children, projectHierarchy }: BaseProps) => {
-	const [active, setActive] = useState(true);
+	const [active, setActive] = useState(false);
 	const [face, setFace] = useState<React.ReactNode>(<FaFaceSmile />);
 
 	const projectHierarchyWidth: () => number = () => {
@@ -44,8 +44,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 
 	const contentStyle: () => Style = () => {
 		return {
-			maxHeight: "calc(100vh-50px)",
-			overflowY: "auto",
+			overflowY: "unset",
 			width: `${
 				active
 					? "calc(100vw -" + (projectHierarchyWidth() + 50) + "px)"
@@ -58,7 +57,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 	};
 
 	return (
-		<div className="bg-background max-w-[100vw] max-h-[100vh] overflow-hidden">
+		<div className="bg-background max-w-[100vw] max-h-[100vh] overflow-x-clip">
 			<div className={`absolute top-0 w-[50px] h-[100vh]`}>
 				<Sidebar
 					active={active}
@@ -72,7 +71,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 				projectHierarchyWidth={projectHierarchyWidth()}
 			/>
 			<div
-				className={`absolute top-0 left-0 pt-[50px] h-full flex flex-row items-start justify-start transition-transform duration-300 ease-in-out overflow-x-clip`}
+				className={`fixed top-0 left-0 pt-[50px] h-full flex flex-row items-start justify-start transition-transform duration-300 ease-in-out`}
 				style={translationStyle()}
 			>
 				<ProjectHierarchyComponent
@@ -80,7 +79,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 					width={projectHierarchyWidth()}
 				/>
 				<div
-					className={`flex flex-col items-start ml-0 ${
+					className={`flex flex-col items-start ml-0${
 						active ? "" : "md:ml-40"
 					}`}
 					style={contentStyle()}
