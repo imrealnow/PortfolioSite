@@ -3,6 +3,7 @@ import {
 	FaFileImage, // Image
 	FaFileAlt, // Markdown
 	FaFileCode, // Executable
+	FaFileExport, // Link
 } from "react-icons/fa";
 import { IconType } from "react-icons";
 import { FileType } from "../types/Project";
@@ -29,6 +30,9 @@ const IconForFileType: React.FC<IconForFileTypeProps> = ({
 			break;
 		case FileType.EXECUTABLE:
 			Icon = FaFileCode;
+			break;
+		case FileType.LINK:
+			Icon = FaFileExport;
 			break;
 		default:
 			return null; // Or you can return a default icon if desired

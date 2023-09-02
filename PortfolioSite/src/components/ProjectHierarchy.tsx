@@ -1,6 +1,11 @@
 import React from "react";
 import { Disclosure } from "@headlessui/react";
-import { FileItem, ProjectFolder, ProjectHierarchy } from "../types/Project";
+import {
+	FileItem,
+	FileType,
+	ProjectFolder,
+	ProjectHierarchy,
+} from "../types/Project";
 import { FaAngleRight } from "react-icons/fa";
 import IconForFileType from "./IconForFileType";
 import { openFileItem } from "../atoms/openFileItem";
@@ -16,13 +21,14 @@ const FileItemComponent: React.FC<{ file: FileItem }> = ({ file }) => {
 	};
 
 	return (
-		<div
+		<a
+			href={file.contentType === FileType.LINK ? file.content : "#"}
 			onClick={handleFileClick}
 			className="inline-flex items-center w-full text-md gap-2 pl-2 cursor-pointer text-stone-400 hover:text-stone-300 hover:bg-stone-400 hover:bg-opacity-50"
 		>
 			<IconForFileType type={file.contentType} /> {file.name}
 			{file.contentType.toString()}
-		</div>
+		</a>
 	);
 };
 

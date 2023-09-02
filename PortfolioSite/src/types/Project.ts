@@ -3,6 +3,8 @@ enum FileType {
     MARKDOWN = '.md',
     EXECUTABLE = '.exe', // You can expand this enum for different types of executables or files.
     IMAGE = '.png',
+    VIDEO = '.mp4',
+    LINK = '.link',
 }
 
 // Represents a file item in the project.

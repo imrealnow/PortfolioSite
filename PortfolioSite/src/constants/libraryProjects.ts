@@ -9,7 +9,7 @@ const libraryProjects: ProjectHierarchy = {
                 {
                     contentType: FileType.MARKDOWN,
                     name: 'README',
-                    content: '',
+                    content: './FileContent/SharedVariables/README.md',
                 },
             ],
         },
@@ -19,7 +19,7 @@ const libraryProjects: ProjectHierarchy = {
                 {
                     contentType: FileType.MARKDOWN,
                     name: 'README',
-                    content: '',
+                    content: './FileContent/ProcessingLibrary/README.md',
                 },
             ],
         },

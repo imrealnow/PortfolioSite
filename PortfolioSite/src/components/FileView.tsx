@@ -17,6 +17,8 @@ export const FileView: React.FC = () => {
 						{typedEmbed.content}
 					</div>
 				);
+			case FileType.LINK:
+				return <div className="pl-4">Redirecting...</div>;
 			default:
 				return <div className="pl-4">Unsupported file type</div>;
 		}
