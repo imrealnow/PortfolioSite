@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Navbar, Sidebar } from "../components";
 import { ProjectHierarchy } from "../types/Project";
 import ProjectHierarchyComponent from "../components/ProjectHierarchy";
+import ChatCompletion from "../components/ChatCompletion";
 import { FileView } from "../components/FileView";
 import { FaFaceSmile } from "react-icons/fa6";
 import RandomFace from "../components/RandomFace";
@@ -58,6 +59,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 
 	return (
 		<div className="bg-background max-w-[100vw] max-h-[100vh] overflow-x-clip">
+			<ChatCompletion prompt="Hello" systemMessage="Hello" />
 			<div className={`absolute top-0 w-[50px] h-[100vh]`}>
 				<Sidebar
 					active={active}
@@ -71,7 +73,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 				projectHierarchyWidth={projectHierarchyWidth()}
 			/>
 			<div
-				className={`fixed top-0 left-0 pt-[50px] h-full flex flex-row items-start justify-start transition-transform duration-300 ease-in-out`}
+				className={`fixed top-0 left-0 pt-[50px] h-full flex flex-row place-items-center justify-start transition-transform duration-300 ease-in-out`}
 				style={translationStyle()}
 			>
 				<ProjectHierarchyComponent
