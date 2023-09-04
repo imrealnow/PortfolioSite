@@ -42,15 +42,40 @@ h1 {
   line-height: 1.1;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@keyframes fadeInUp {
+  0% {
+      opacity: 0;
+      max-height: 8rem;
   }
-  a:hover {
-    color: #747bff;
+  25% {
+      opacity: 1;
   }
-  button {
-    background-color: #f9f9f9;
+  100% {
+      opacity: 1;
+      max-height: 24rem;
   }
 }
+
+.fade-in-up {
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeOutDown {
+  0% {
+      opacity: 1;
+      max-height: 24rem;
+  }
+  80% {
+      opacity: 0.1;
+      max-height: 4rem;
+  }
+  100% {
+      opacity: 0;
+      max-height: 1rem;
+  }
+}
+
+.fade-out-down {
+  animation: fadeOutDown 0.3s forwards;
+}
+

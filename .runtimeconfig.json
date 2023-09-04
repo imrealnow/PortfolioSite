@@ -1,0 +1,9 @@
+
+[1m[31mError:[39m[22m No currently active project.
+To run this command, you need to specify a project. You have two options:
+- Run this command with [1m--project <alias_or_project_id>[22m.
+- Set an active project by running [1mfirebase use --add[22m, then rerun this command.
+To list all the Firebase projects to which you have access, run [1mfirebase projects:list[22m.
+To learn about active projects for the CLI, visit https://firebase.google.com/docs/cli#project_aliases
+
+

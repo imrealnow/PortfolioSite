@@ -36,6 +36,7 @@ const ProjectFolderComponent: React.FC<{ folder: ProjectFolder }> = ({
 	folder,
 }) => {
 	const navigate = useNavigate();
+	const hasFiles = folder.files.length > 0;
 	return (
 		<span
 			onClick={
@@ -43,21 +44,26 @@ const ProjectFolderComponent: React.FC<{ folder: ProjectFolder }> = ({
 					? () => navigate("" + folder.onClickNavigate)
 					: () => {}
 			}
+			id={folder.name}
 		>
 			<Disclosure>
 				{({ open }) => (
 					<>
 						<Disclosure.Button className="flex justify-start items-center w-full pl-8 text-lg hover:bg-stone-400 hover:bg-opacity-50 text-stone-300 font-normal font-mono text-left">
 							<FaAngleRight
-								className={`${open ? "rotate-90" : ""} w-5 h-5`}
+								className={`${
+									hasFiles && open ? "rotate-90" : ""
+								} w-5 h-5`}
 							/>
 							{folder.name}
 						</Disclosure.Button>
-						<Disclosure.Panel className="flex flex-col box-content mb-1 ml-8 hover:border-l-2 border-stone-400">
-							{folder.files.map((file, idx) => (
-								<FileItemComponent key={idx} file={file} />
-							))}
-						</Disclosure.Panel>
+						{hasFiles && (
+							<Disclosure.Panel className="flex flex-col box-content mb-1 ml-8 hover:border-l-2 border-stone-400">
+								{folder.files.map((file, idx) => (
+									<FileItemComponent key={idx} file={file} />
+								))}
+							</Disclosure.Panel>
+						)}
 					</>
 				)}
 			</Disclosure>

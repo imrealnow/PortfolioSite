@@ -54,7 +54,7 @@ const Navbar = ({ active, icon, projectHierarchyWidth }: NavbarProps) => {
 								</span>
 								<span
 									className={`hidden text-xs text-stone-500 ${
-										active ? "" : "sm:inline-block"
+										active ? "" : "md:inline-block"
 									}`}
 								>
 									{" - "} Developer Portfolio
@@ -63,7 +63,10 @@ const Navbar = ({ active, icon, projectHierarchyWidth }: NavbarProps) => {
 						</a>
 						{/* Page title */}
 						{currentFile && (
-							<span className="absolute hidden sm:block -ml-10 xs:-ml-[50px] left-1/2 transform -translate-x-1/2 text-sm xs:text-2xl font-bold text-stone-300">
+							<span className="absolute hidden sm:block -ml-10 xs:-ml-[50px] top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 text-sm xs:text-2xl font-bold text-stone-300">
+								{currentFile.parentFolder
+									? currentFile.parentFolder.name + "/"
+									: ""}
 								{currentFile.name + currentFile.contentType}
 							</span>
 						)}

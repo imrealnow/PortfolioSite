@@ -15,6 +15,7 @@ dist-ssr
 # firebase
 .firebase
 *.rules
+functions
 
 # Editor directories and files
 .vscode/*

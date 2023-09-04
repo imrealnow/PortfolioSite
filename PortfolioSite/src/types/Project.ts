@@ -12,6 +12,14 @@ interface FileItem<T = any> {
     contentType: FileType;
     name: string;
     content: T;
+    parentFolder?: ProjectFolder;
+}
+
+// Represents a project folder which contains multiple files.
+interface ProjectFolder {
+    name: string; // Name of the project.
+    files: FileItem[]; // Files associated with this project.
+    onClickNavigate?: string; // Optional navigation link.
 }
 
 class GameItem implements FileItem<React.ReactNode> {
@@ -26,11 +34,16 @@ class GameItem implements FileItem<React.ReactNode> {
     }
 }
 
-// Represents a project folder which contains multiple files.
-interface ProjectFolder {
-    name: string; // Name of the project.
-    files: FileItem[]; // Files associated with this project.
-    onClickNavigate?: string; // Optional navigation link.
+class Folder implements ProjectFolder {
+    public name: string;
+    public files: FileItem[];
+    constructor(name: string, ...files: FileItem[]) {
+        this.name = name;
+        this.files = files;
+        for(const file of files) {
+            file.parentFolder = this;
+        }
+    }
 }
 
 // Represents the entire project hierarchy.
@@ -39,5 +52,5 @@ type ProjectHierarchy = {
     showReturnButton: boolean;
 };
 
-export { FileType, GameItem };
+export { FileType, GameItem, Folder };
 export type { FileItem, ProjectFolder, ProjectHierarchy };

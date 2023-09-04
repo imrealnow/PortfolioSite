@@ -1,0 +1,13 @@
+# Define the URL
+$url = "http://127.0.0.1:5001/portfoliowebsite-94789/us-central1/gptPromptStream"
+
+# Define the request body as a hashtable
+$body = @{
+    prompt = "Your prompt here"
+} | ConvertTo-Json
+
+# Make the POST request
+$response = Invoke-RestMethod -Uri $url -Method Post -Body $body -ContentType "application/json"
+
+# Print the response
+$response
