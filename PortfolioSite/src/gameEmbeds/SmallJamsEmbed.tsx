@@ -1,6 +1,4 @@
 const SmallJamsEmbed: () => React.ReactNode = () => {
-	const width: () => number = () =>
-		Math.max(300, Math.min(900, window.screen.width * 0.8));
 	return (
 		<iframe
 			src="https://itch.io/embed-upload/8628447?color=333333"

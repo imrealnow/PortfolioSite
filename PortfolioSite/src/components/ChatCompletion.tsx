@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { Message, ChatHistoryImpl } from "../types/Chat";
+import { Message } from "../types/Chat";
 import chatHistoryState from "../atoms/chatHistory";
 import { FiMessageCircle } from "react-icons/fi";
 import { Role } from "../types/Chat";
