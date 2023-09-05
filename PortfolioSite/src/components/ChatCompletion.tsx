@@ -32,7 +32,7 @@ const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 	const handleSendMessage = () => {
 		if (message.trim()) {
 			addMessage(new Message(message, Role.User));
-			generateText().then((response) => {
+			generateText(message).then((response) => {
 				if (response) {
 					addMessage(new Message(response, Role.Assistant));
 					setText("");
@@ -64,14 +64,15 @@ const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 		}
 	};
 
-	const generateText = async () => {
+	const generateText = async (userMessage: string) => {
 		let accumulatedText = "";
-
 		setText("");
 		try {
 			const rawMessages: RawMessage[] =
 				chatHistory.getOpenAIFormattedMessages();
+			rawMessages.push({ role: "user", content: userMessage });
 			const body = { messages: rawMessages };
+			console.log(body);
 			const response = await fetch(
 				"https://chatgptserver-f1e122a51b2e.herokuapp.com/ChatCompletion",
 				{
@@ -147,18 +148,26 @@ const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 								ref={chatRef}
 								className="flex-grow overflow-y-auto pr-2 pb-2 scrollbar-thin scrollbar-thumb-slate-700"
 							>
-								{chatHistory.messages.map((msg, index) => (
-									<div
-										key={index}
-										className={`p-2 my-2 w-fit max-w-[75%] ${
-											msg.role === Role.User
-												? "ml-auto user-message"
-												: "assistant-message"
-										}`}
-									>
-										{msg.message}
-									</div>
-								))}
+								<h1 className="text-2xl font-bold pt-0 pb-2 text-slate-300">
+									{chatHistory.chatbotPersonality}
+								</h1>
+								{chatHistory.messages.map((msg, index) => {
+									if (msg.role === Role.System) {
+										return null;
+									}
+									return (
+										<div
+											key={index}
+											className={`p-2 my-2 w-fit max-w-[75%] ${
+												msg.role === Role.User
+													? "ml-auto user-message"
+													: "assistant-message"
+											}`}
+										>
+											{msg.message}
+										</div>
+									);
+								})}
 
 								{/* This is for displaying the real-time message being streamed in */}
 								{text && (

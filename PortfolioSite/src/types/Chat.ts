@@ -33,6 +33,7 @@ class Message implements ChatMessage {
 
 class ChatHistoryImpl implements ChatHistory {
 	public messages: ChatMessage[] = [];
+	public chatbotPersonality: string = "";
 	constructor(...messages: ChatMessage[]) {
 		this.messages = messages;
 	}
@@ -42,6 +43,11 @@ class ChatHistoryImpl implements ChatHistory {
 		clone.messages = [...this.messages];
 		return clone;
 	};
+
+	public setPersonality(personality: string): ChatHistoryImpl {
+		this.chatbotPersonality = personality;
+		return this;
+	}
 
 	public addMessage(message: ChatMessage) {
 		this.messages.push(message);

@@ -25,26 +25,6 @@ const Home = () => {
 							opportunities where I'm able to bring my diverse
 							skillset to the table.
 						</p>
-
-						<h2 className="text-2xl font-bold pt-8">Contact Me</h2>
-						<form>
-							<label className="text-sm">Email Address</label>
-							<input
-								type="text"
-								className="border-1 border-slate-900 bg-slate-700 rounded-md w-full"
-							/>
-							<label className="text-sm pt-2">Message</label>
-							<textarea
-								className="resize-none border-1 border-slate-900 bg-slate-700 rounded-md w-full"
-								rows={5}
-							/>
-							<button
-								type="submit"
-								className="border-1 border-slate-900 bg-slate-700 rounded-md w-full mt-2"
-							>
-								Send
-							</button>
-						</form>
 					</section>
 					{/* Right box */}
 					<section className="flex flex-col items-start justify-start max-w-sm">
