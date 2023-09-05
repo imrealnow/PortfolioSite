@@ -1,8 +1,9 @@
 import { useState, useRef } from "react";
 import { useRecoilState } from "recoil";
-import { Message } from "../types/Chat";
+import { Message, RawMessage } from "../types/Chat";
 import chatHistoryState from "../atoms/chatHistory";
 import { FiMessageCircle } from "react-icons/fi";
+import { FiSend } from "react-icons/fi";
 import { Role } from "../types/Chat";
 
 interface ChatCompletionProps {
@@ -12,12 +13,13 @@ interface ChatCompletionProps {
 	onUpdate?: (text: string) => void;
 }
 
-const ChatCompletion = ({ systemMessage, onUpdate }: ChatCompletionProps) => {
+const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 	const [text, setText] = useState<string>("");
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [message, setMessage] = useState<string>("");
 	const [chatHistory, setChatHistory] = useRecoilState(chatHistoryState);
-	const inputRef = useRef<HTMLInputElement>(null);
+	const inputRef = useRef<HTMLTextAreaElement>(null);
+	const chatRef = useRef<HTMLDivElement>(null);
 
 	const addMessage = (message: Message) => {
 		setChatHistory((prevHistory) => {
@@ -30,9 +32,10 @@ const ChatCompletion = ({ systemMessage, onUpdate }: ChatCompletionProps) => {
 	const handleSendMessage = () => {
 		if (message.trim()) {
 			addMessage(new Message(message, Role.User));
-			generateText(message).then((response) => {
+			generateText().then((response) => {
 				if (response) {
 					addMessage(new Message(response, Role.Assistant));
+					setText("");
 				}
 			});
 			setMessage("");
@@ -40,16 +43,42 @@ const ChatCompletion = ({ systemMessage, onUpdate }: ChatCompletionProps) => {
 		}
 	};
 
-	const toggleOpen: (current: boolean) => void = (prev) => {
-		setIsOpen(!prev);
+	const messageSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		if (e.key === "Enter" && e.shiftKey == false) {
+			e.preventDefault();
+			return handleSendMessage();
+		}
 	};
 
-	const generateText = async (prompt: string) => {
+	const scrollChatToBottom = () => {
+		chatRef.current?.scrollTo(0, chatRef.current?.scrollHeight);
+	};
+
+	const toggleOpen: (current: boolean) => void = (prev) => {
+		setIsOpen(!prev);
+		if (!prev) {
+			setTimeout(() => {
+				inputRef.current?.focus();
+				scrollChatToBottom();
+			}, 50);
+		}
+	};
+
+	const generateText = async () => {
 		let accumulatedText = "";
 
+		setText("");
 		try {
+			const rawMessages: RawMessage[] =
+				chatHistory.getOpenAIFormattedMessages();
+			const body = { messages: rawMessages };
 			const response = await fetch(
-				`https://dmhelper-server.herokuapp.com/complete?systemMessage=${systemMessage}&prompt=${prompt}`
+				"https://chatgptserver-f1e122a51b2e.herokuapp.com/ChatCompletion",
+				{
+					method: "post",
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(body),
+				}
 			);
 
 			if (!response.ok) {
@@ -69,11 +98,12 @@ const ChatCompletion = ({ systemMessage, onUpdate }: ChatCompletionProps) => {
 					const jsonChunk = JSON.parse(
 						jsonLines[jsonLines.length - 1]
 					);
-					const content = jsonChunk.choices[0].delta.content;
+					const content = jsonChunk.content;
 
 					if (content) {
 						accumulatedText += content;
 						setText((prevText) => prevText + content);
+						scrollChatToBottom();
 						onUpdate?.(accumulatedText);
 					}
 
@@ -109,15 +139,18 @@ const ChatCompletion = ({ systemMessage, onUpdate }: ChatCompletionProps) => {
 						isOpen
 							? "fade-in-up"
 							: "fade-out-down pointer-events-none"
-					} flex flex-col justify-start mt-4 p-4 w-80 h-96 bg-slate-600 border rounded shadow-lg transform transition-transform duration-300 ease-in-out`}
+					} flex flex-col justify-start mt-4 p-4 w-60 xs:w-80 h-96 bg-slate-600 border rounded shadow-lg transform transition-transform duration-300 ease-in-out`}
 				>
 					{isOpen && (
 						<>
-							<div className="flex-grow overflow-y-auto">
+							<div
+								ref={chatRef}
+								className="flex-grow overflow-y-auto pr-2 pb-2 scrollbar-thin scrollbar-thumb-slate-700"
+							>
 								{chatHistory.messages.map((msg, index) => (
 									<div
 										key={index}
-										className={`p-2 my-1 w-3/4 ${
+										className={`p-2 my-2 w-fit max-w-[75%] ${
 											msg.role === Role.User
 												? "ml-auto user-message"
 												: "assistant-message"
@@ -135,20 +168,22 @@ const ChatCompletion = ({ systemMessage, onUpdate }: ChatCompletionProps) => {
 								)}
 							</div>
 
-							<div className="mt-4">
-								<input
-									type="text"
+							<div className="mt-4 relative">
+								<textarea
 									value={message}
 									onChange={(e) => setMessage(e.target.value)}
-									className="bg-slate-400 text-slate-900 border rounded w-full p-2"
+									onKeyDown={messageSubmit}
+									className="bg-slate-400 text-slate-900 border rounded w-full p-2 overflow-y-auto resize-none pr-12 mr-4 scrollbar-thin scrollbar-thumb-slate-700"
 									placeholder="Type your message..."
+									rows={2}
+									cols={4}
 									ref={inputRef}
 								/>
 								<button
 									onClick={handleSendMessage}
-									className="mt-2 bg-blue-500 text-white rounded p-2 w-full"
+									className="absolute flex justify-center items-center bottom-3 right-2 bg-blue-500 text-white rounded p-2 w-8 h-8"
 								>
-									Send
+									<FiSend size={20} />{" "}
 								</button>
 							</div>
 						</>

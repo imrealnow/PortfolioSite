@@ -13,6 +13,7 @@
     "@headlessui/react": "^1.7.17",
     "@tailwindcss/typography": "^0.5.9",
     "@types/marked": "^5.0.1",
+    "axios": "^1.5.0",
     "firebase": "^10.3.0",
     "flowbite": "^1.8.1",
     "flowbite-react": "^0.5.0",

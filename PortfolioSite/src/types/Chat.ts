@@ -10,6 +10,11 @@ interface ChatMessage {
 	date?: Date;
 }
 
+interface RawMessage {
+	role: string;
+	content: string;
+}
+
 interface ChatHistory {
 	messages: ChatMessage[];
 }
@@ -54,11 +59,11 @@ class ChatHistoryImpl implements ChatHistory {
 		return this.messages;
 	}
 
-	public getOpenAIFormattedMessages() {
+	public getOpenAIFormattedMessages(): RawMessage[] {
 		// messages: [{"role": "user", "content": "Hello!"}],
 		const messages = this.messages.map((message) => {
 			return {
-				role: Role[message.role],
+				role: Role[message.role].toLowerCase(),
 				content: message.message,
 			};
 		});
@@ -67,4 +72,4 @@ class ChatHistoryImpl implements ChatHistory {
 }
 
 export { Role, Message, ChatHistoryImpl };
-export type { ChatHistory, ChatMessage };
+export type { ChatHistory, ChatMessage, RawMessage };
