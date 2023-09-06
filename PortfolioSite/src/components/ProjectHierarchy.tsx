@@ -38,13 +38,21 @@ const ProjectFolderComponent: React.FC<{ folder: ProjectFolder }> = ({
 	folder,
 }) => {
 	const navigate = useNavigate();
+	const setOpenFile = useSetRecoilState(openFileItem);
+
 	const hasFiles = folder.files.length > 0;
 	return (
 		<span
 			onClick={
-				folder.onClickNavigate
+				folder.onClickNavigate !== undefined
 					? () => navigate("" + folder.onClickNavigate)
-					: () => {}
+					: () => {
+							const readme = folder.findReadme();
+							if (readme) {
+								console.log("readme", readme);
+								setOpenFile(readme);
+							}
+					  }
 			}
 			id={folder.name}
 		>

@@ -1,5 +1,7 @@
 # Overview
 
+[#school-project](#) [#java](#) [#group-project](#)
+
 Chap’s challenge is a creative clone of the (first level of the) 1989 Atari game, [Chips Challenge](https://en.wikipedia.org/wiki/Chip%27s_Challenge). It was developed by a team of us 6 students for the opportunity to gain some experience with collaboration and software design. We have recreated the first level in mechanics and layout, and designed our own second level that was inspired by the original game.
 
 ## Features

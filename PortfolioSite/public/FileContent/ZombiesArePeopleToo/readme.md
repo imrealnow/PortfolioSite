@@ -1,5 +1,7 @@
 # Zombies are People Too
 
+[#game-jam](#) [#school-project](#) [#duo-development](#) [#unity](#) [#Csharp](#)
+
 GMTK 2023 Game Jam Entry
 
 Developed by Me and DKAMX using Unity, "Zombie Cure" offers a unique twist on the traditional zombie genre. Instead of combating the undead, players are tasked with healing them, turning foes back into friends!

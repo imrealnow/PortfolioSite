@@ -1,5 +1,7 @@
 # Echoes of Innocence
 
+[#game-jam](#) [#school-project](#) [#duo-development](#) [#unity](#) [#Csharp](#)
+
 A pixel-art exploration game developed during the **Pixel Art Game Jam 2023**.
 
 ![Game Screenshot](https://img.itch.zone/aW1nLzEyMTEwMzA2LnBuZw==/315x250%23c/gheGQY.png)

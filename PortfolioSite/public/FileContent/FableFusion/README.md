@@ -1,5 +1,7 @@
 # FableFusion Overview:
 
+[#javascript](#) [#react](#) [#nodejs](#) [#express](#) [#firebase](#) [#ai](#)
+
 To run a campaign in a tabletop RPG such as Dungeons and Dragons, Dungeon masters often have to use premade setting books, or spend a lot of time making their own worlds and campaigns to let their players explore. In the case of premade settings, they could be too restricted on how the players can explore the world. And in the case of making their own worlds, it can take a lot of time, is hard to do well and you can often be left with players choosing to do things you hadn’t prepared for.
 
 Now with the recent influx of powerful LLMs(Large Language Models), there is an opportunity to build a system that can assist game masters to build extensive deep worlds, and prepare new content on the fly in a moment’s notice. Through combining traditional procedural generation techniques with generative AI, we can provide users with content generation that is high-quality while still being highly customisable to fit their needs.
