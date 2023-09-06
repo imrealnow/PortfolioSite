@@ -12,7 +12,7 @@ const App = () => {
 			<Routes>
 				<Route path="/" element={<Navigate to="/home" />} />
 				<Route
-					path="/home"
+					path="/home/*"
 					element={
 						<Base
 							title="Home"
@@ -22,13 +22,13 @@ const App = () => {
 					}
 				/>
 				<Route
-					path="/games"
+					path="/games/*"
 					element={
 						<Base title="Games" projectHierarchy={gameProjects} />
 					}
 				/>
 				<Route
-					path="/libraries"
+					path="/libraries/*"
 					element={
 						<Base
 							title="Libraries"
@@ -37,7 +37,7 @@ const App = () => {
 					}
 				/>
 				<Route
-					path="/webapps"
+					path="/webapps/*"
 					element={
 						<Base
 							title="Web Apps"

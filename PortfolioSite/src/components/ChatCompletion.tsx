@@ -65,14 +65,12 @@ const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 	};
 
 	const generateText = async (userMessage: string) => {
-		let accumulatedText = "";
 		setText("");
 		try {
 			const rawMessages: RawMessage[] =
 				chatHistory.getOpenAIFormattedMessages();
 			rawMessages.push({ role: "user", content: userMessage });
 			const body = { messages: rawMessages };
-			console.log(body);
 			const response = await fetch(
 				"https://chatgptserver-f1e122a51b2e.herokuapp.com/ChatCompletion",
 				{
@@ -89,29 +87,32 @@ const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 			if (response.body) {
 				const reader = response.body.getReader();
 				const textDecoder = new TextDecoder();
+				let totalDecodedText = "";
+				let accumulatedText = "";
 
-				const readData = async (): Promise<string> => {
+				while (true) {
 					const { done, value } = await reader.read();
-					if (done) return accumulatedText;
+					if (done) break;
 
 					const decodedChunk = textDecoder.decode(value);
-					const jsonLines = decodedChunk.trim().split("\f");
-					const jsonChunk = JSON.parse(
-						jsonLines[jsonLines.length - 1]
-					);
-					const content = jsonChunk.content;
+					totalDecodedText += decodedChunk;
+					accumulatedText = "";
 
-					if (content) {
-						accumulatedText += content;
-						setText((prevText) => prevText + content);
-						scrollChatToBottom();
-						onUpdate?.(accumulatedText);
+					const jsonLines = totalDecodedText.trim().split("\f");
+					for (let i = 0; i < jsonLines.length - 1; i++) {
+						const json = jsonLines[i];
+						const content: string | null | undefined =
+							JSON.parse(json).content;
+						if (content) {
+							accumulatedText += content;
+						}
 					}
 
-					return readData();
-				};
-
-				return await readData();
+					setText(accumulatedText);
+					scrollChatToBottom();
+					onUpdate?.(accumulatedText);
+				}
+				return accumulatedText;
 			} else {
 				console.error("Response body is not available");
 				return null;
@@ -140,7 +141,7 @@ const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 						isOpen
 							? "fade-in-up"
 							: "fade-out-down pointer-events-none"
-					} flex flex-col justify-start mt-4 p-4 w-60 xs:w-80 h-96 bg-slate-600 border rounded shadow-lg transform transition-transform duration-300 ease-in-out`}
+					} flex flex-col justify-start mt-4 p-4 w-70 h-30 xs:w-80 xs:h-96 bg-slate-600 border rounded shadow-lg transform transition-transform duration-300 ease-in-out`}
 				>
 					{isOpen && (
 						<>

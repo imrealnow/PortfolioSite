@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { Navbar, Sidebar } from "../components";
 import { ProjectHierarchy } from "../types/Project";
 import ProjectHierarchyComponent from "../components/ProjectHierarchy";
@@ -58,38 +59,40 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 	};
 
 	return (
-		<div className="bg-background max-w-[100vw] max-h-[100vh] overflow-x-clip">
-			<ChatCompletion prompt="Hello" systemMessage="Hello" />
-			<div className={`absolute top-0 w-[50px] h-[100vh]`}>
-				<Sidebar
+		<>
+			<div className="bg-background max-w-[100vw] max-h-[100vh] overflow-x-clip">
+				<ChatCompletion prompt="Hello" systemMessage="Hello" />
+				<div className={`absolute top-0 w-[50px] h-[100vh]`}>
+					<Sidebar
+						active={active}
+						onClick={toggleActive}
+						projectHierarchy={projectHierarchy}
+					/>
+				</div>
+				<Navbar
 					active={active}
-					onClick={toggleActive}
-					projectHierarchy={projectHierarchy}
-				/>
-			</div>
-			<Navbar
-				active={active}
-				icon={face}
-				projectHierarchyWidth={projectHierarchyWidth()}
-			/>
-			<div
-				className={`fixed top-0 left-0 pt-[50px] h-full flex flex-row place-items-center justify-start transition-transform duration-300 ease-in-out`}
-				style={translationStyle()}
-			>
-				<ProjectHierarchyComponent
-					hierarchy={projectHierarchy}
-					width={projectHierarchyWidth()}
+					icon={face}
+					projectHierarchyWidth={projectHierarchyWidth()}
 				/>
 				<div
-					className={`flex flex-col items-start ml-0${
-						active ? "" : "md:ml-40"
-					}`}
-					style={contentStyle()}
+					className={`fixed top-0 left-0 pt-[50px] h-full flex flex-row place-items-center justify-start transition-transform duration-300 ease-in-out`}
+					style={translationStyle()}
 				>
-					{children ? children : <FileView />}
+					<ProjectHierarchyComponent
+						hierarchy={projectHierarchy}
+						width={projectHierarchyWidth()}
+					/>
+					<div
+						className={`flex flex-col items-start ml-0${
+							active ? "" : "md:ml-40"
+						}`}
+						style={contentStyle()}
+					>
+						{children ? children : <FileView />}
+					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

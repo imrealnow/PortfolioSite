@@ -18,17 +18,19 @@ const FileItemComponent: React.FC<{ file: FileItem }> = ({ file }) => {
 
 	const handleFileClick = () => {
 		setOpenFile(file);
+		if (file.contentType === FileType.LINK) {
+			window.open(file.content, "_blank");
+		}
 	};
 
 	return (
-		<a
-			href={file.contentType === FileType.LINK ? file.content : "#"}
+		<span
 			onClick={handleFileClick}
 			className="inline-flex items-center w-full text-md gap-2 pl-2 cursor-pointer text-stone-400 hover:text-stone-300 hover:bg-stone-400 hover:bg-opacity-50"
 		>
 			<IconForFileType type={file.contentType} /> {file.name}
 			{file.contentType.toString()}
-		</a>
+		</span>
 	);
 };
 
@@ -49,11 +51,11 @@ const ProjectFolderComponent: React.FC<{ folder: ProjectFolder }> = ({
 			<Disclosure>
 				{({ open }) => (
 					<>
-						<Disclosure.Button className="flex justify-start items-center w-full pl-8 text-lg hover:bg-stone-400 hover:bg-opacity-50 text-stone-300 font-normal font-mono text-left">
+						<Disclosure.Button className="flex flex-row justify-start items-start w-full pl-8 text-lg hover:bg-stone-400 hover:bg-opacity-50 text-stone-300 font-normal font-mono text-left">
 							<FaAngleRight
 								className={`${
 									hasFiles && open ? "rotate-90" : ""
-								} w-5 h-5`}
+								} relative top-0 translate-y-1/4 w-5 h-5`}
 							/>
 							{folder.name}
 						</Disclosure.Button>
@@ -74,7 +76,8 @@ const ProjectFolderComponent: React.FC<{ folder: ProjectFolder }> = ({
 const ProjectHierarchyComponent: React.FC<{
 	hierarchy: ProjectHierarchy;
 	width: number;
-}> = ({ hierarchy, width }) => {
+	selectedProject?: string;
+}> = ({ hierarchy, width, selectedProject }) => {
 	const widthStyle: () => CSS.PropertiesHyphen = () => {
 		return {
 			width: Math.floor(width + 10) + "px",
@@ -84,14 +87,14 @@ const ProjectHierarchyComponent: React.FC<{
 	const navigate = useNavigate();
 	return (
 		<div
-			className={`relative flex flex-col items-start min-h-full ml-10 h-full bg-gray-800 rounded-none overflow-y-none`}
+			className={`relative flex flex-col items-start min-h-full ml-10 h-full bg-gray-800 rounded-none overflow-y-none z-10`}
 			style={widthStyle()}
 		>
 			{hierarchy.showReturnButton && (
 				<>
 					<button
 						className="flex flex-row items-center w-full bg-[#384d4f] text-stone-300 font-mono font-normal text-lg text-left pl-4 hover:bg-stone-400 hover:bg-opacity-50"
-						onClick={() => navigate("/")}
+						onClick={() => navigate("/home")}
 					>
 						<FaAngleRight className="w-5 h-5" /> Home{" "}
 					</button>
