@@ -77,7 +77,7 @@ const ProjectHierarchyComponent: React.FC<{
 	hierarchy: ProjectHierarchy;
 	width: number;
 	selectedProject?: string;
-}> = ({ hierarchy, width, selectedProject }) => {
+}> = ({ hierarchy, width }) => {
 	const widthStyle: () => CSS.PropertiesHyphen = () => {
 		return {
 			width: Math.floor(width + 10) + "px",

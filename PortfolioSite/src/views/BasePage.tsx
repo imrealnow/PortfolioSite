@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import { Navbar, Sidebar } from "../components";
 import { ProjectHierarchy } from "../types/Project";
 import ProjectHierarchyComponent from "../components/ProjectHierarchy";
