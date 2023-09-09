@@ -140,10 +140,11 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 					<ProjectHierarchyComponent
 						hierarchy={projectHierarchy}
 						width={projectHierarchyWidth()}
+						moveProps={moveProps}
 						dragHandleSlot={
 							<div
-								{...moveProps}
 								className="w-4 h-full bg-slate-600 border-slate-800 border-l-2 border-r-2 box-border z-20 cursor-pointer touch-none"
+								{...moveProps}
 								content=""
 							/>
 						}

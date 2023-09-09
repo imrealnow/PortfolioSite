@@ -1,7 +1,6 @@
 import React, { cloneElement } from "react";
 import { useRecoilValue } from "recoil";
 import { AiFillLinkedin, AiFillGithub } from "react-icons/ai";
-import type * as CSS from "csstype";
 import { FileItem } from "../types/Project";
 import { openFileItem } from "../atoms/openFileItem";
 

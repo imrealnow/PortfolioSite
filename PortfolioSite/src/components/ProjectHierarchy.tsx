@@ -10,6 +10,7 @@ import { FaAngleRight } from "react-icons/fa";
 import IconForFileType from "./IconForFileType";
 import { openFileItem } from "../atoms/openFileItem";
 import { useSetRecoilState, useRecoilState } from "recoil";
+import { DOMAttributes, FocusableElement } from "@react-types/shared";
 import { useNavigate } from "react-router-dom";
 
 const FileItemComponent: React.FC<{ file: FileItem }> = ({ file }) => {
@@ -96,13 +97,15 @@ const ProjectHierarchyComponent: React.FC<{
 	width: number;
 	selectedProject?: string;
 	dragHandleSlot?: React.ReactNode;
-}> = ({ hierarchy, width, dragHandleSlot }) => {
+	moveProps: DOMAttributes<FocusableElement>;
+}> = ({ hierarchy, width, dragHandleSlot, moveProps }) => {
 	const navigate = useNavigate();
 
 	return (
 		<>
 			<div
 				className={`relative flex flex-col items-start min-h-full ml-10 h-full bg-gray-800 rounded-none overflow-y-none z-10`}
+				{...moveProps}
 				style={{
 					width: Math.floor(width + 10) + "px",
 					height: "100%",
