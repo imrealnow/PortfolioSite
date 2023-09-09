@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import { useMove } from "@react-aria/interactions";
 import { Navbar, Sidebar } from "../components";
@@ -9,7 +9,6 @@ import { FileView } from "../components/FileView";
 import { FaFaceSmile } from "react-icons/fa6";
 import RandomFace from "../components/RandomFace";
 import type * as CSS from "csstype";
-import { set } from "firebase/database";
 
 interface BaseProps {
 	title: string;
@@ -23,25 +22,39 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 	const [active, setActive] = useState(false);
 	const [dragging, setDragging] = useState(false);
 	const [dragX, setDragX] = useState(0);
-	const [mainLeft, setMainLeft] = useState(0);
 	const [face, setFace] = useState<React.ReactNode>(<FaFaceSmile />);
 
 	const projectHierarchyWidth: () => number = () => {
 		return Math.min(768, Math.max(200, window.screen.width * 0.2));
 	};
+	const mainRef = useRef<HTMLElement>(null);
+	const slidingBarRef = useRef<HTMLDivElement>(null);
 
 	const dragOpenThreshold = projectHierarchyWidth() / 3;
 	const dragCloseThreshold = -projectHierarchyWidth() / 4;
 
 	const toggleActive: (active: boolean) => void = (prev) => {
 		setActive(!prev);
-		setMainLeft(mainLeftBase(!prev));
+		setMainRefLeft(mainLeftBase(!prev));
 		setTimeout(() => {
 			setFace(RandomFace({}));
 		}, 50);
 		setTimeout(() => {
 			setFace(<FaFaceSmile />);
 		}, 700);
+	};
+
+	const setMainRefLeft: (left: number) => void = (left) => {
+		if (mainRef.current !== null) {
+			mainRef.current.style.left = left + "px";
+		}
+		if (slidingBarRef.current !== null) {
+			slidingBarRef.current.style.width =
+				left + projectHierarchyWidth() + "px";
+			if (dragging) {
+				slidingBarRef.current.style.transitionDuration = "0s";
+			}
+		}
 	};
 
 	const contentStyle: () => Style = () => {
@@ -70,7 +83,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 		onMove(e) {
 			setDragX((prev) => prev + e.deltaX);
 			setDragging(true);
-			setMainLeft(
+			setMainRefLeft(
 				Math.min(
 					0,
 					Math.max(
@@ -88,7 +101,11 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 			) {
 				toggleActive(active);
 			} else {
-				setMainLeft(mainLeftBase(active));
+				setMainRefLeft(mainLeftBase(active));
+			}
+			setDragX(0);
+			if (slidingBarRef.current !== null) {
+				slidingBarRef.current.style.transitionDuration = "0.3s";
 			}
 		},
 	});
@@ -107,16 +124,17 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 				<Navbar
 					active={active}
 					icon={face}
-					projectHierarchyWidth={projectHierarchyWidth()}
+					slidingBarRef={slidingBarRef}
 				/>
-				<div
+				<main
 					className={`fixed top-0 left-0 pt-[50px] h-full flex flex-row place-items-center justify-start`}
+					ref={mainRef}
 					style={{
 						transitionProperty: "left",
 						transitionDuration: `${dragging ? "0s" : "0.3s"}`,
 						transitionTimingFunction: "ease-in-out",
 						width: `calc(100vw + ${projectHierarchyWidth()}px)})`,
-						left: `${mainLeft}px`,
+						left: `${-projectHierarchyWidth()}px`,
 					}}
 				>
 					<ProjectHierarchyComponent
@@ -125,7 +143,8 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 						dragHandleSlot={
 							<div
 								{...moveProps}
-								className="w-20 h-full z-20 opacity-0"
+								className="w-4 h-full bg-slate-600 border-slate-800 border-l-2 border-r-2 box-border z-20 cursor-pointer touch-none"
+								content=""
 							/>
 						}
 					/>
@@ -137,7 +156,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 					>
 						{children ? children : <FileView />}
 					</div>
-				</div>
+				</main>
 			</div>
 		</>
 	);

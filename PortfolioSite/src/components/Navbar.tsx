@@ -7,16 +7,11 @@ import { openFileItem } from "../atoms/openFileItem";
 
 interface NavbarProps {
 	active: boolean;
-	projectHierarchyWidth: number;
+	slidingBarRef: React.RefObject<HTMLDivElement>;
 	icon: React.ReactNode;
 }
 
-const Navbar = ({ active, icon, projectHierarchyWidth }: NavbarProps) => {
-	const widthStyle: () => CSS.Properties = () => {
-		return {
-			width: active ? `${projectHierarchyWidth}px` : "0px",
-		};
-	};
+const Navbar = ({ active, icon, slidingBarRef }: NavbarProps) => {
 	const currentFile: FileItem<any> | null =
 		useRecoilValue<FileItem<any> | null>(openFileItem);
 	return (
@@ -33,8 +28,12 @@ const Navbar = ({ active, icon, projectHierarchyWidth }: NavbarProps) => {
 					<div className="flex flex-1 justify-between">
 						{/* Black sliding bar on menu open */}
 						<div
-							className={`fixed top-0 left-[50px] bg-[#293b55] transition-width duration-300 ease-in-out h-[50px] z-40`}
-							style={widthStyle()}
+							className={`fixed top-0 w-0 left-[50px] bg-[#293b55] h-[50px] duration-300 z-40`}
+							ref={slidingBarRef}
+							style={{
+								transitionProperty: "width",
+								transitionTimingFunction: "ease-in-out",
+							}}
 						/>
 						<a
 							href="/"

@@ -1,7 +1,5 @@
 import React from "react";
-import { useRef, useState } from "react";
 import { Disclosure } from "@headlessui/react";
-import { useMove } from "@react-aria/interactions";
 import {
 	FileItem,
 	FileType,
@@ -13,7 +11,6 @@ import IconForFileType from "./IconForFileType";
 import { openFileItem } from "../atoms/openFileItem";
 import { useSetRecoilState, useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import type * as CSS from "csstype";
 
 const FileItemComponent: React.FC<{ file: FileItem }> = ({ file }) => {
 	const [openFile, setOpenFile] = useRecoilState(openFileItem);
