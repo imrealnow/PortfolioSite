@@ -7,21 +7,19 @@ const allProjects: ProjectHierarchy = {
 			name: "Games",
 			files: [],
 			onClickNavigate: "/games",
+			findReadme: () => null,
 		},
 		{
 			name: "Libraries",
 			files: [],
 			onClickNavigate: "/libraries",
+			findReadme: () => null,
 		},
 		{
 			name: "Web Apps",
 			files: [],
 			onClickNavigate: "/webapps",
-		},
-		{
-			name: "Contact Me",
-			files: [],
-			onClickNavigate: "/contact",
+			findReadme: () => null,
 		},
 	],
 };
