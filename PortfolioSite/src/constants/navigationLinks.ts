@@ -1,10 +1,8 @@
-import {
-	AiFillHome,
-	AiFillMessage,
-} from "react-icons/ai";
+import { AiFillHome } from "react-icons/ai";
 import { MdLibraryBooks, MdWeb } from "react-icons/md";
 import { IoGameControllerSharp } from "react-icons/io5";
-import {IconType} from "react-icons";
+import { FaBookReader } from "react-icons/fa";
+import { IconType } from "react-icons";
 
 export interface NavLink {
 	title: string;
@@ -13,7 +11,7 @@ export interface NavLink {
 	actionOverride?: () => void;
 }
 
-export const navLinksTop : Array<NavLink> = [
+export const navLinksTop: Array<NavLink> = [
 	{
 		title: "Home",
 		id: "home",
@@ -34,12 +32,11 @@ export const navLinksTop : Array<NavLink> = [
 		id: "webapps",
 		icon: MdWeb,
 	},
-];
-
-export const navLinksBottom : Array<NavLink> = [
 	{
-		title: "Contact Me",
-		id: "contact",
-		icon: AiFillMessage,
+		title: "Skills",
+		id: "skills",
+		icon: FaBookReader,
 	},
 ];
+
+export const navLinksBottom: Array<NavLink> = [];

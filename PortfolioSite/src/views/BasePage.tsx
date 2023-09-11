@@ -8,15 +8,12 @@ import ChatCompletion from "../components/ChatCompletion";
 import { FileView } from "../components/FileView";
 import { FaFaceSmile } from "react-icons/fa6";
 import RandomFace from "../components/RandomFace";
-import type * as CSS from "csstype";
 
 interface BaseProps {
 	title: string;
 	children?: React.ReactNode;
 	projectHierarchy: ProjectHierarchy;
 }
-
-interface Style extends CSS.Properties, CSS.PropertiesHyphen {}
 
 const Base = ({ children, projectHierarchy }: BaseProps) => {
 	const [active, setActive] = useState(false);
@@ -55,20 +52,6 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 				slidingBarRef.current.style.transitionDuration = "0s";
 			}
 		}
-	};
-
-	const contentStyle: () => Style = () => {
-		return {
-			overflowY: "unset",
-			width: `${
-				active
-					? "calc(100vw -" + (projectHierarchyWidth() + 50) + "px)"
-					: "calc(100vw - 100px)"
-			}`,
-			transition: `margin 0.3s ease-in-out`,
-			maxWidth: "100vw",
-			overlowX: "hidden",
-		};
 	};
 
 	const mainLeftBase: (isActive: boolean) => number = (isActive) => {
@@ -118,6 +101,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 					<Sidebar
 						active={active}
 						onClick={toggleActive}
+						moveProps={moveProps}
 						projectHierarchy={projectHierarchy}
 					/>
 				</div>
@@ -127,7 +111,7 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 					slidingBarRef={slidingBarRef}
 				/>
 				<main
-					className={`fixed top-0 left-0 pt-[50px] h-full flex flex-row place-items-center justify-start`}
+					className={`fixed top-0 left-0 pt-[50px] h-full flex flex-row place-items-start justify-start`}
 					ref={mainRef}
 					style={{
 						transitionProperty: "left",
@@ -150,10 +134,21 @@ const Base = ({ children, projectHierarchy }: BaseProps) => {
 						}
 					/>
 					<div
-						className={`flex flex-col items-start ml-0${
-							active ? "" : "md:ml-40"
+						className={`relative pt-10 h-full flex flex-col items-start scrollbar-thin scrollbar-thumb-slate-700 ml-0 mr-[100px]${
+							active ? "" : "md:ml-50 overflow-hidden"
 						}`}
-						style={contentStyle()}
+						style={{
+							overflowY: "unset",
+							overflowX: "hidden",
+							width: `${
+								active
+									? "calc(100vw -" +
+									  (projectHierarchyWidth() + 50) +
+									  "px)"
+									: "calc(100vw - 65px)"
+							}`,
+							maxWidth: "100vw",
+						}}
 					>
 						{children ? children : <FileView />}
 					</div>

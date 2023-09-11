@@ -4,6 +4,7 @@ import { Message, RawMessage } from "../types/Chat";
 import chatHistoryState from "../atoms/chatHistory";
 import { FiMessageCircle } from "react-icons/fi";
 import { FiSend } from "react-icons/fi";
+import { AiOutlineClose } from "react-icons/ai";
 import { Role } from "../types/Chat";
 
 interface ChatCompletionProps {
@@ -125,7 +126,11 @@ const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 
 	return (
 		<>
-			<div className="fixed bottom-4 right-4 z-50">
+			<div
+				className={`fixed bottom-4 right-4 z-50 ${
+					isOpen && "hidden xs:block"
+				}`}
+			>
 				<button
 					onClick={() => {
 						toggleOpen(isOpen);
@@ -135,7 +140,25 @@ const ChatCompletion = ({ onUpdate }: ChatCompletionProps) => {
 					<FiMessageCircle size={24} />
 				</button>
 			</div>
-			<div className="fixed bottom-20 right-4 origin-bottom-right z-50">
+			<div
+				className={`fixed bottom-2 xs:bottom-20 right-4 origin-bottom-right z-50 ${
+					!isOpen && "pointer-events-none"
+				}`}
+			>
+				{isOpen && (
+					<div
+						className={`absolute top-6 right-4 z-50 block xs:hidden`}
+					>
+						<button
+							onClick={() => {
+								toggleOpen(isOpen);
+							}}
+							className="flex items-center justify-center rounded-full bg-blue-500 text-white w-8 h-8 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+						>
+							<AiOutlineClose size={24} />
+						</button>
+					</div>
+				)}
 				<div
 					className={`${
 						isOpen

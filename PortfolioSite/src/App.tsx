@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Base, Home } from "./views";
+import SkillsList from "./components/SkillsList";
 import { Navigate } from "react-router-dom";
 import allProjects from "./constants/allProjects";
 import gameProjects from "./constants/gameProjects";
@@ -46,11 +47,12 @@ const App = () => {
 					}
 				/>
 				<Route
-					path="/contact"
+					path="/skills/*"
 					element={
 						<Base
-							title="Contact Me"
-							projectHierarchy={gameProjects}
+							title="Skills"
+							projectHierarchy={allProjects}
+							children={<SkillsList />}
 						/>
 					}
 				/>

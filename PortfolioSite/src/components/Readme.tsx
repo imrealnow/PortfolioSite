@@ -23,7 +23,7 @@ const Readme: React.FC<ReadmeProps> = ({ path }) => {
 
 	return (
 		<article
-			className="prose max-w-6xl prose-invert overflow-y-scroll scrollbar-thin max-h-[90vh] px-10"
+			className="prose prose-invert prose-sm xs:prose-md max-w-6xl overflow-y-scroll scrollbar-thin max-h-[90vh] px-5 xs:px-10"
 			dangerouslySetInnerHTML={{ __html: markdown || "" }}
 		/>
 	);

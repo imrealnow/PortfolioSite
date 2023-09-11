@@ -26,7 +26,7 @@ export const FileView: React.FC = () => {
 
 	if (!currentOpenFile) {
 		return (
-			<div className="relative w-96 h-96 left-1/2 -translate-x-1/2">
+			<div className="relative w-96 h-96 left-1/2 -translate-x-1/2 origin-top">
 				<svg
 					id="e2BePtbGJhQ1"
 					xmlns="http://www.w3.org/2000/svg"

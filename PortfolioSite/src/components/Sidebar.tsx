@@ -2,6 +2,7 @@ import { Tooltip } from "flowbite-react";
 import React from "react";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
 import { useNavigate, useLocation } from "react-router-dom";
+import { DOMAttributes, FocusableElement } from "@react-types/shared";
 import {
 	navLinksBottom,
 	navLinksTop,
@@ -13,6 +14,7 @@ interface SidebarProps {
 	active: boolean;
 	onClick: (active: boolean) => void;
 	projectHierarchy: ProjectHierarchy;
+	moveProps: DOMAttributes<FocusableElement>;
 }
 const Sidebar = (props: SidebarProps) => {
 	let active = props.active;
@@ -78,7 +80,8 @@ const Sidebar = (props: SidebarProps) => {
 		<>
 			<aside
 				id="logo-sidebar"
-				className={`fixed flex flex-row top-0 left-0 z-40 h-[100vh] w-[50px]`}
+				className={`fixed flex flex-row top-0 left-0 z-40 h-[100vh] w-[50px] touch-none`}
+				{...props.moveProps}
 				aria-label="Sidebar"
 			>
 				<div className="flex w-[50px] h-[50px] justify-start bg-shadowBlack">

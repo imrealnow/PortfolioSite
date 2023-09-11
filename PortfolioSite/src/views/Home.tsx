@@ -1,4 +1,14 @@
+import { useEffect } from "react";
+import { openFileItem } from "../atoms/openFileItem";
+import { useSetRecoilState } from "recoil";
+
 const Home = () => {
+	// Reset open file
+	const setOpenFile = useSetRecoilState(openFileItem);
+	useEffect(() => {
+		setOpenFile(null);
+	}, []);
+
 	return (
 		<>
 			<div className="flex flex-col pl-10 md:pl-20 min-w-md md:max-h-[75vh] md:max-w-[100vw] py-2">
@@ -17,13 +27,15 @@ const Home = () => {
 					<section className="flex flex-col items-start justify-start max-w-xs md:max-w-md">
 						<h2 className="text-2xl font-bold">About Me</h2>
 						<p className="text-sm">
-							I am a software developer who is passionate about
-							creating games, libraries, and web applications. I
-							am currently a student at Victoria University of
-							Wellington studying a Bachelor of Science in
-							Computer Science, and I'm looking for any
-							opportunities where I'm able to bring my diverse
-							skillset to the table.
+							Eager to transition from an 8-year culinary journey
+							to a fulfilling role in software development, I am
+							currently deepening my knowledge with a Bachelor's
+							degree in Computer Science, building upon my diploma
+							in Software Development. My extensive experience as
+							a chef has sharpened my collaborative,
+							problem-solving, and critical-thinking skills —
+							attributes I believe are vital in creating
+							meaningful software solutions.
 						</p>
 					</section>
 					{/* Right box */}

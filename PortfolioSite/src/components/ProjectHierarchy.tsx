@@ -104,7 +104,7 @@ const ProjectHierarchyComponent: React.FC<{
 	return (
 		<>
 			<div
-				className={`relative flex flex-col items-start min-h-full ml-10 h-full bg-gray-800 rounded-none overflow-y-none z-10`}
+				className={`relative flex flex-col items-start min-h-full ml-10 h-full bg-gray-800 rounded-none overflow-y-none z-10 touch-none`}
 				{...moveProps}
 				style={{
 					width: Math.floor(width + 10) + "px",
@@ -119,7 +119,6 @@ const ProjectHierarchyComponent: React.FC<{
 						>
 							<FaAngleRight className="w-5 h-5" /> Home{" "}
 						</button>
-						<hr className="w-full border-[#496183]" />
 					</>
 				)}
 				{hierarchy.projectFolders.map((folder, idx) => (
